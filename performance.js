@@ -22,7 +22,8 @@ export default function () {
     let postResponse = http.post(`${api1BaseUrl}${api1endpoints}`, payload, { headers: headers });
     check(postResponse, {
       'POST is successful': (res) => res.status === 201,
-      'POST response contains ID': (res) => res.json().hasOwnProperty('id'),
+      'PUT response contains name': (res) => res.json().name === 'morpheus',
+      'POST response contains job': (res) => res.json().job === 'leader',
     });
 
     let userId = postResponse.json().id;
@@ -30,6 +31,7 @@ export default function () {
     let putResponse = http.put(`${api1BaseUrl}${api2endpoints}`, payload, { headers: headers });
     check(putResponse, {
       'PUT is successful': (res) => res.status === 200,
+      'PUT response contains original name': (res) => res.json().name === 'morpheus',
       'PUT response contains updated job': (res) => res.json().job === 'zion resident',
     });
   });
